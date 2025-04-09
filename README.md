@@ -25,6 +25,10 @@ Install the required dependencies using `pip`:
 ```bash
 pip install pycuda opencv-python kagglehub matplotlib numpy
 ```
+Also install the cuda toolkit
+```
+!apt-get install -y nvidia-cuda-toolkit
+```
 
 ## Overview
 

@@ -51,11 +51,11 @@ def convert_image_to_matrix_cuda(image_path, block_size=(16, 16, 1)):
     process_image_kernel = mod.get_function("process_image_kernel")
 
     # Define block and grid dimensions for kernel launch
-    grid_size = ((width + block_size[0] - 1) // block_size[0], 
+    grid_size = ((width + block_size[0] - 1) // block_size[0],
                  (height + block_size[1] - 1) // block_size[1])
 
     # Launch the kernel to process the image (convert to grayscale)
-    process_image_kernel(d_image, np.int32(width), np.int32(height), np.int32(channels), 
+    process_image_kernel(d_image, np.int32(width), np.int32(height), np.int32(channels),
                          block=block_size, grid=grid_size)
 
     # Copy the result back to host memory
@@ -97,12 +97,27 @@ def main():
 
     # Generate a list of image paths to process (example for "apple_pie" folder)
     image_folder = os.path.join(dataset_path, "images", "apple_pie")
-    image_paths = [os.path.join(image_folder, f) for f in os.listdir(image_folder) if f.endswith((".jpg", ".jpeg"))] 
-    
+    image_paths = [os.path.join(image_folder, f) for f in os.listdir(image_folder) if f.endswith((".jpg", ".jpeg"))]
+
     block_sizes = [
-        (8, 8, 1), (16, 16, 1), (32, 32, 1), (64, 1, 1), (4, 4, 1), 
-        (32, 8, 1), (128, 1, 1), (8, 4, 1), (64, 4, 1), (16, 8, 1),
-        (64, 16, 1), (256, 1, 1), (8, 16, 1)
+        (1, 1, 1),
+        (2, 2, 1),
+        (4, 4, 1),
+        (8, 8, 1),
+        (16, 16, 1),
+        (32, 32, 1),
+        (16, 64, 1),
+        (8, 128, 1),
+        (4, 256, 1),
+        (2, 512, 1),
+        (1, 1024, 1),
+        (8, 1, 1),
+        (16, 1, 1),
+        (32, 1, 1),
+        (64, 1, 1),
+        (128, 1, 1),
+        (256, 1, 1),
+        (512, 1, 1),
     ]
     times = {block_size: [] for block_size in block_sizes}
 
