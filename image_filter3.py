@@ -58,7 +58,6 @@ def warm_up_gpu(iterations=10, image_size=(256, 256)):
     cuda.Context.synchronize()
     print(f"GPU warm-up complete after {iterations} iterations.")
 
-
 def convert_image_to_matrix_cuda(image_path, block_size=(16, 16, 1)):
     # CUDA kernel to process the image (convert to grayscale)
     kernel_code = """
@@ -127,11 +126,9 @@ def process_batch(batch_images, block_size):
         if processed_image:
             processed_images.append(processed_image)
 
-
 def main():
     # Path to check if dataset is already downloaded
     dataset_path = '/content/food41'
-    # now I don't have to keep redownloading everytime
 
     # Check if the dataset exists, if not, download it
     if not os.path.exists(dataset_path):
